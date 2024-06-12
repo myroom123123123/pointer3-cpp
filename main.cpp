@@ -2,43 +2,39 @@
 #include <ctime>
 using namespace std;
 
-int* find(int* A, int* B, int sizeA, int sizeB) {
-	for (int i = 0; i < sizeA; i++) {
-		if (A[i] == B[0]) {
-			int j = 1;
-			while (j < sizeB && A[i + j] == B[j]) {
-				j++;
-			}
-			if (j == sizeB) {
-				return &A[i];
-			}
+int* removeNegatives(int* arr, int size) {
+	int newSize = 0;
+	for (int i = 0; i < size; i++) {
+		if (arr[i] >= 0) {
+			newSize++;
 		}
 	}
-	return 0;
+	int* newArr = new int[newSize];
+	int j = 0;
+	for (int i = 0; i < size; i++) {
+		if (arr[i] >= 0) {
+			newArr[j] = arr[i];
+			j++;
+		}
+	}
+	return newArr;
 }
 
 int main() {
 	srand(time(0));
-	int sizeA = 10;
-	int sizeB = 3;
-	int A[10];
-	int B[3];
-	for (int i = 0; i < sizeA; i++) {
-		A[i] = rand() % 10;
-		cout << A[i] << " ";
+	int size = 10;
+	int* arr = new int[size];
+	for (int i = 0; i < size; i++) {
+		arr[i] = rand() % 21 - 10;
+		cout << arr[i] << " ";
 	}
 	cout << endl;
-	for (int i = 0; i < sizeB; i++) {
-		B[i] = rand() % 10;
-		cout << B[i] << " ";
+	int* newArr = removeNegatives(arr, size);
+	for (int i = 0; i < size; i++) {
+		cout << newArr[i] << " ";
 	}
 	cout << endl;
-	int* result = find(A, B, sizeA, sizeB);
-	if (result) {
-		cout << "Found at index " << result - A << endl;
-	}
-	else {
-		cout << "Not found" << endl;
-	}
+	delete[] arr;
+	delete[] newArr;
 	return 0;
 }
