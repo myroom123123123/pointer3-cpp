@@ -2,40 +2,35 @@
 #include <ctime>
 using namespace std;
 
-template<typename T>
-void func(T* arr, int size, T*& sum, T*& mul)
-{
-    if (sum == nullptr)
-    {
-        sum = new T(0);
-    }
-    if (mul == nullptr)
-    {
-        mul = new T(1);
-    }
-    for (int i = 0; i < size; i++)
-    {
-        *sum += arr[i];
-        *mul *= arr[i];
-    }
+template <typename T>
+void count(int* arr, int size, int& neg, int& pos, int& zero) {
+	for (int i = 0; i < size; i++) {
+		if (arr[i] < 0) {
+			neg++;
+		}
+		else if (arr[i] > 0) {
+			pos++;
+		}
+		else {
+			zero++;
+		}
+	}
 }
 
-int main()
-{
-    srand(time(0));
-    int size = 10;
-    long long* arr = new long long[size];
-    long long* sum = nullptr;
-    long long* mul = nullptr;
-    for (size_t i = 0; i < size; i++)
-    {
-        arr[i] = rand() % 10 + 1;
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-
-    func<long long>(arr, size, sum, mul);
-    cout << "Sum: " << *sum << endl;
-    cout << "Mul: " << *mul << endl;
-    return 0;
+int main() {
+	srand(time(0));
+	int size = 10;
+	int* arr = new int[size];
+	for (int i = 0; i < size; i++) {
+		arr[i] = rand() % 21 - 10;
+		cout << arr[i] << " ";
+	}
+	cout << endl;
+	int neg = 0, pos = 0, zero = 0;
+	count<int>(arr, size, neg, pos, zero);
+	cout << "Negative: " << neg << endl;
+	cout << "Positive: " << pos << endl;
+	cout << "Zero: " << zero << endl;
+	delete[] arr;
+	return 0;
 }
