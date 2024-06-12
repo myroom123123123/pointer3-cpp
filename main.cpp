@@ -2,35 +2,43 @@
 #include <ctime>
 using namespace std;
 
-template <typename T>
-void count(int* arr, int size, int& neg, int& pos, int& zero) {
-	for (int i = 0; i < size; i++) {
-		if (arr[i] < 0) {
-			neg++;
-		}
-		else if (arr[i] > 0) {
-			pos++;
-		}
-		else {
-			zero++;
+int* find(int* A, int* B, int sizeA, int sizeB) {
+	for (int i = 0; i < sizeA; i++) {
+		if (A[i] == B[0]) {
+			int j = 1;
+			while (j < sizeB && A[i + j] == B[j]) {
+				j++;
+			}
+			if (j == sizeB) {
+				return &A[i];
+			}
 		}
 	}
+	return 0;
 }
 
 int main() {
 	srand(time(0));
-	int size = 10;
-	int* arr = new int[size];
-	for (int i = 0; i < size; i++) {
-		arr[i] = rand() % 21 - 10;
-		cout << arr[i] << " ";
+	int sizeA = 10;
+	int sizeB = 3;
+	int A[10];
+	int B[3];
+	for (int i = 0; i < sizeA; i++) {
+		A[i] = rand() % 10;
+		cout << A[i] << " ";
 	}
 	cout << endl;
-	int neg = 0, pos = 0, zero = 0;
-	count<int>(arr, size, neg, pos, zero);
-	cout << "Negative: " << neg << endl;
-	cout << "Positive: " << pos << endl;
-	cout << "Zero: " << zero << endl;
-	delete[] arr;
+	for (int i = 0; i < sizeB; i++) {
+		B[i] = rand() % 10;
+		cout << B[i] << " ";
+	}
+	cout << endl;
+	int* result = find(A, B, sizeA, sizeB);
+	if (result) {
+		cout << "Found at index " << result - A << endl;
+	}
+	else {
+		cout << "Not found" << endl;
+	}
 	return 0;
 }
